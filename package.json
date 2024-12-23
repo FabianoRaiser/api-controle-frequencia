@@ -1,0 +1,19 @@
+{
+  "name": "api-controle-frequencia",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "api do Sistema de controle de Frequencia do Programa de Formação Continuada da Prefeitura Municipal de Joinville ",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --watch server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.47.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
