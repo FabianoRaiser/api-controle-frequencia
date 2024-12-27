@@ -6,6 +6,7 @@ import presencasRoutes from './presencas.js';
 import alocacoesRoutes from './alocacoes.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
 import tokensRoutes from './tokens.js';
+import userRoutes from './users.js';
 
 const router = express.Router();
 
@@ -19,5 +20,6 @@ router.use('/turmas', turmasRoutes);
 router.use('/presencas', presencasRoutes);
 router.use('/alocacoes', alocacoesRoutes);
 router.use('/tokens', tokensRoutes);
+router.use('/user', userRoutes);
 
 export default router;
