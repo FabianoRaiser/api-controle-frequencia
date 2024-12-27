@@ -1,7 +1,7 @@
-import { ramdonBytes } from 'crypto';
+import { randomBytes } from 'crypto';
 
 const generateToken = (length = 32) => {
-    return ramdonBytes(length).toString('hex');
+    return randomBytes(length).toString('hex');
 }
 
 export default generateToken;
