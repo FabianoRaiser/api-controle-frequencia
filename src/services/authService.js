@@ -1,11 +1,11 @@
 import supabase from "../config/dbConfig.js";
 import bcrypt from 'bcryptjs';
 
-const authenticateUser = async (userName, password) => {
+const authenticateUser = async (username, password) => {
     const { data, error} = await supabase
         .from('users')
         .select('*')
-        .eq('nome', userName)
+        .eq('nome', username)
         .single();
 
     if(error || !data ) {

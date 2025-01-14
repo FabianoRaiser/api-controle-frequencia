@@ -10,24 +10,7 @@ router.get("/", async (req, res) => {
     const { data, error } = await supabase.from("turmas").select(`
             turma_id,
             nome_turma,
-            etapa,
-            created_at,
-            created_by (
-                user_id,
-                nome
-            ),
-            modified_at,
-            modified_by (
-                user_id,
-                nome
-            )
-            alocacoes (
-                professores (
-                    matricula,
-                    nome_professor,
-                    unidade_ensino
-                )
-            )
+            etapa
             `);
 
     if (error) {
@@ -57,20 +40,27 @@ router.get("/formacoes", async (req, res) => {
                 etapa,
                 created_at,
             created_by (
-                user_id,
                 nome
             ),
             modified_at,
             modified_by (
-                user_id,
                 nome
             ),
             formacoes (
-                turma_id,
                 formacao_id,
                 nome_formacao,
                 carga_horaria,
                 data
+            ),
+            alocacoes (
+              id,
+              ativa,
+              data_inicio,
+              data_final,
+              professores (
+                nome_professor,
+                matricula
+              )
             )
             `);
 
@@ -100,32 +90,32 @@ router.get("/:id", async (req, res) => {
       .from("turmas")
       .select(
         `
-                turma_id,
+              turma_id,
                 nome_turma,
-            etapa,
-            created_at,
+                etapa,
+                created_at,
             created_by (
-                user_id,
                 nome
             ),
             modified_at,
             modified_by (
-                user_id,
                 nome
-            )
-            alocacoes (
-                professores (
-                    matricula,
-                    nome_professor,
-                    unidade_ensino
-                )
             ),
             formacoes (
-                turma_id,
                 formacao_id,
                 nome_formacao,
                 carga_horaria,
                 data
+            ),
+            alocacoes (
+              id,
+              ativa,
+              data_inicio,
+              data_final,
+              professores (
+                nome_professor,
+                matricula
+              )
             )
                 `
       )

@@ -4,10 +4,10 @@ import authenticateUser from "../services/authService.js";
 const router = express.Router();
 
 router.post("/login", async (req, res) => {
-  const { userName, password } = req.body;
+  const { username, password } = req.body;
 
   try {
-    const user = await authenticateUser(userName, password);
+    const user = await authenticateUser(username, password);
     res.status(200).json({ message: "Login bem-sucedido", user });
   } catch {
     res
@@ -20,3 +20,6 @@ router.post("/login", async (req, res) => {
       });
   }
 });
+
+
+export default router;

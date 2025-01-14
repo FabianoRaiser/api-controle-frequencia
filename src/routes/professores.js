@@ -10,31 +10,9 @@ router.get("/", async (req, res) => {
     const { data, error } = await supabase.from("professores").select(`
                 nome_professor,
                 matricula,
-                cpf,
                 email,
-                regime_trabalho,
                 data_admissao,
-                unidade_ensino,
-                horas_semanais,
-                horas_cumpridas,
-                created_at,
-                created_by,
-                modified_at,
-                modified_by,
-                presencas (
-                  formacoes (
-                    nome_formacao,
-                    carga_horaria,
-                    data                    
-                  )
-                ),
-                alocacoes (
-                  turmas (
-                    turma_id,
-                    nome_turma,
-                    etapa,
-                  )
-                )
+                unidade_ensino
                 `);
 
     if (error) {
@@ -68,7 +46,7 @@ router.get("/:id", async (req, res) => {
                 matricula,
                 email,
                 regime_trabalho,
-                data_ingresso,
+                data_admissao,
                 unidade_ensino,
                 horas_semanais,
                 horas_cumpridas,
@@ -77,18 +55,28 @@ router.get("/:id", async (req, res) => {
                 modified_at,
                 modified_by,
                 presencas (
+                    presenca_id,
                     formacoes (
                         nome_formacao,
                         carga_horaria,
-                        data                    
+                        data,
+                        periodo,
+                        modalidade,
+                        turmas (
+                          nome_turma,
+                          etapa
+                        )                    
                     )    
                 ),
                 alocacoes (
                   id,
+                  ativa,
+                  data_inicio,
+                  data_final,
                   turmas (
-                    turmas_id,
+                    turma_id,
                     nome_turma,
-                    etapa,
+                    etapa
                   )
                 )
                 `
@@ -120,15 +108,22 @@ router.get("/:id", async (req, res) => {
 // Inserir um novo professor
 router.post("/novo-professor", async (req, res) => {
   try {
+    const newProfessor = {
+      ...req.body,
+      created_by: "8058e841-c9b5-4621-aaad-a54e8cd0f794" // Será entregue depois pelo front
+    }
+
     const { data, error } = await supabase
       .from("professores")
-      .insert(req.body)
+      .insert(newProfessor)
       .single();
 
     if (error) throw error;
 
-    res.status(201).json(data);
+    const result = { message: 'Professor registrado', data: data}
+    res.status(201).json(result);
   } catch (error) {
+    console.error('Erro ao inserir professor: ', error)
     res.status(500).json({
       error: error.message,
       details: error.details,
